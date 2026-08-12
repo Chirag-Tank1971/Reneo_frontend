@@ -1,7 +1,12 @@
 import type { ApiError, OrderResponse, Pagination, Product } from '../types';
 import { supabase } from './supabase';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+function resolveApiUrl(): string {
+  const raw = (import.meta.env.VITE_API_URL || '/api').trim();
+  return raw.replace(/\/+$/, '');
+}
+
+const API_URL = resolveApiUrl();
 
 export class ApiClientError extends Error {
   constructor(

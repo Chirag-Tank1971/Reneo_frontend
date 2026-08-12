@@ -27,7 +27,21 @@ VITE_API_URL=/api
 
 Use the **same Supabase URL and anon key** as the backend `.env`.
 
-For local development, set `VITE_API_URL=/api` (Vite proxies to the backend). On Vercel, set `VITE_API_URL` to your deployed backend URL.
+For local development, set `VITE_API_URL=/api` (Vite proxies to the backend).
+
+### Vercel deploy
+
+In **Project → Settings → Environment Variables**, set:
+
+```env
+VITE_API_URL=https://reneo-backend.onrender.com
+```
+
+(or `https://reneo-backend.onrender.com/api` — the backend serves both paths)
+
+**Important:** Vite bakes env vars at **build** time. After changing `VITE_API_URL`, trigger a **Redeploy** on Vercel (Deployments → ⋮ → Redeploy).
+
+If the marketplace shows **"Request failed"** with a **404** in the browser console, the frontend is usually calling `/api/products` on Render while the deployed backend only had `/products`. Redeploy the backend with the latest code (dual `/api` + root routes).
 
 ## Run
 
